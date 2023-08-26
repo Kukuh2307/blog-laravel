@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// route ke halaman index
 Route::get('/', function () {
-    return view('blog.layout.main');
+    return view('blog.index');
+});
+
+// route ke halaman login
+Route::get('/login', function () {
+    return view('blog.login');
 });
