@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\authController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,11 @@ Route::get('/', function () {
 });
 
 // route ke halaman login
-Route::get('/login', function () {
-    return view('blog.login');
-});
+Route::get('/login', [authController::class, 'index']);
+
+// route authentikasi login
+Route::post('/login', [authController::class, 'authenticate']);
+
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->middleware('auth');
