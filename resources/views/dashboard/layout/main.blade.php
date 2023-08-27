@@ -19,7 +19,7 @@
             {{-- sidebar --}}
             @include('dashboard.layout.sidebar')
             <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
+            <div id="page-content-wrapper" style="background-color: #ECECEC">
                 <!-- Top navigation-->
                 @include('dashboard.layout.navbar')
                 <!-- Page content-->

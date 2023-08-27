@@ -34,4 +34,14 @@ class authController extends Controller
         // apabila login gagal
         return back()->with('gagal', 'Email atau password salah');
     }
+
+    // fungsi logout
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 }

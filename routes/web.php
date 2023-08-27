@@ -25,6 +25,16 @@ Route::get('/login', [authController::class, 'index']);
 // route authentikasi login
 Route::post('/login', [authController::class, 'authenticate']);
 
+// mencegah user mengakses halaman dashboard tanpa login
+Route::get('/login', [authController::class, 'index'])->name('login')->middleware('guest');
+
+// apabila user sudah masuk dasboard namun ingin mengakses halaman login akan di handle
+Route::redirect('home', 'dashboard');
+
+// route logout admin
+Route::post('/logout', [authController::class, 'logout']);
+
+// route halaman dashboard
 Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware('auth');
