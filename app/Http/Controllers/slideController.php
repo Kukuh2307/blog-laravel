@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\slide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class slideController extends Controller
 {
@@ -12,7 +13,10 @@ class slideController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.slide.index')->with([
+            'slides'    => Slide::all(),
+            'tittle'    => 'Slide',
+        ]);
     }
 
     /**
@@ -79,6 +83,14 @@ class slideController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // ambil semua data sesuai id yang dikirim dari view slide
+        $data = Slide::where('id', $id)->first();
+
+        // kondisi jika gambarnya ada
+        if ($data->gambar) {
+            File::delete(public_path('images/') . $data->gambar);
+        }
+        Slide::where('id', $id)->delete();
+        return back()->with('info', 'Slide berhasil di hapus');
     }
 }
