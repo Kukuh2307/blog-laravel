@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CateagoryController;
 use App\Http\Controllers\slideController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,9 @@ Route::get('/dashboard', function () {
 
 // route halaman slide
 Route::resource('/dashboard/slide', slideController::class)->middleware('auth');
+
+// route kategori dashboard
+Route::resource('/dashboard/kategori', CateagoryController::class)->middleware('auth');
+
+// route slug
+Route::get('/slug-kategori', [CateagoryController::class, 'getSlug'])->middleware('auth');

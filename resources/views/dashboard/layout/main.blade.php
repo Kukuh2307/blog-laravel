@@ -40,6 +40,9 @@
         <!-- Core theme JS-->
         <script src="{{ asset('admin') }}/js/scripts.js"></script>
 
+        {{-- cdn jquery untuk generate slug--}}
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
         <script>
             function tampilGambar() {
                 let gambarInput = document.getElementById('gambar');
