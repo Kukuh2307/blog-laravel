@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\slideController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // route ke halaman index
-Route::get('/', function () {
-    return view('blog.index');
-});
+Route::get('/', [BlogController::class, 'index']);
 
 // route ke halaman login
 Route::get('/login', [authController::class, 'index']);

@@ -31,7 +31,7 @@
                                     </td>
                                     <td class="col-7">{{ $slide->judul }}</td>
                                     <td class="col-1">
-                                        <a href="/dashboard/slide{{ $slide->id }}" class="btn btn-warning btn-sm" title="edit slide">
+                                        <a href="/dashboard/slide/{{ $slide->id }}/edit" class="btn btn-warning btn-sm" title="edit slide">
                                             <i class="fa-solid fa-pen"></i>
                                         </a>
                                         <form action="/dashboard/slide/{{ $slide->id }}" method="POST" class="d-inline" onsubmit="return confirm('Anda yakin ingin menghapus slide??')">

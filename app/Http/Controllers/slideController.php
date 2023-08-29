@@ -51,7 +51,7 @@ class slideController extends Controller
             $validasi['gambar'] = $namaGambar;
         }
         slide::create($validasi);
-        return back()->with('info', 'Slide baru berhasil di simpan');
+        return redirect('/dashboard/slide')->with('info', 'Slide baru berhasil di simpan');
     }
 
     /**
@@ -67,7 +67,11 @@ class slideController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $slideEdit = Slide::where('id', $id)->first();
+        return view('dashboard.slide.slide-edit')->with([
+            'tittle'    => 'Slide',
+            'data'      => $slideEdit,
+        ]);
     }
 
     /**
@@ -75,7 +79,32 @@ class slideController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validasi = $request->validate([
+            'judul'     => 'required|max:50',
+            'gambar'    => 'image|file|max:1024',
+            'kutipan'   => 'required|max:255'
+        ], [
+            'judul.required'    => 'Headline harus di isi',
+            'judul.max'         => 'Maksimal 50 karakter',
+            'gambar.image'      => 'Format gambar salah',
+            'gambar.max'        => 'Maksimal ukuran gambar 1 MB',
+            'kutipan.required'  => 'Kutipan harus di isi',
+            'kutipan.max'       => 'Maksimal 255 karakter'
+        ]);
+
+        // cek gambar yang di upload
+        if ($request->file('gambar')) {
+            // apabila gambar ada di database,maka akan di update,jika tidak ada maka akan di tambahkan
+            if ($request->gambarLama) {
+                File::delete(public_path('images/' . $request->gambarLama));
+            }
+            $namaGambar = $request->file('gambar')->hashName();
+            $request->file('gambar')->move(public_path('images'), $namaGambar);
+            $validasi['gambar'] = $namaGambar;
+        }
+
+        slide::where('id', $id)->update($validasi);
+        return redirect('/dashboard/slide')->with('info', 'Slide berhasil di update');
     }
 
     /**
