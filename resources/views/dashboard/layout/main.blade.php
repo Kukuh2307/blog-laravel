@@ -10,6 +10,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('blog') }}/assets/write.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('admin') }}/css/styles.css" rel="stylesheet" />
+
+        {{-- css datatable --}}
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
         {{-- cdn font awesome --}}
         <link rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -43,6 +47,9 @@
         {{-- cdn jquery untuk generate slug--}}
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
+        {{-- datatable --}}
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
         <script>
             function tampilGambar() {
                 let gambarInput = document.getElementById('gambar');
@@ -64,6 +71,12 @@
 		.catch( error => {
 			console.error( error );
 		} );
+
+        // data table
+        // $(document).ready(function(){
+        //     $('#myTable').DataTable();
+        // });
+        new DataTable('#myTable');
         </script>
     </body>
 </html>

@@ -69,7 +69,7 @@ class slideController extends Controller
     {
         $slideEdit = Slide::where('id', $id)->first();
         return view('dashboard.slide.slide-edit')->with([
-            'tittle'    => 'Slide',
+            'tittle'    => 'Edit Slide',
             'data'      => $slideEdit,
         ]);
     }

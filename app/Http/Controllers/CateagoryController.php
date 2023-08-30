@@ -14,7 +14,10 @@ class CateagoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.kategori.index')->with([
+            'tittle'        => 'Kategori',
+            'kategories'    => Category::all()
+        ]);
     }
 
     /**
@@ -42,7 +45,7 @@ class CateagoryController extends Controller
             'deskripsi.max'     => 'maksimal 255 karakter',
         ]);
         Category::create($validasi);
-        return back()->with('info', 'kategori baru berhasil di simpan');
+        return redirect('/dashboard/kategori')->with('info', 'kategori baru berhasil di simpan');
     }
 
     /**
@@ -58,7 +61,11 @@ class CateagoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $kategoriEdit = Category::where('id', $id)->first();
+        return view('dashboard/kategori/kategori-edit')->with([
+            'tittle'    => 'Edit Kategori',
+            'data'      => $kategoriEdit
+        ]);
     }
 
     /**
@@ -66,7 +73,20 @@ class CateagoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Category::where('id', $id)->first();
+        // cek apakah data dari view tidak sama dengan data yang ada di database
+        if ($request->nama != $data->nama) {
+            $validasi['nama'] = 'required';
+            $validasi['slug'] = 'required|unique:categories';
+        }
+        $validasi['deskripsi'] = 'max:255';
+        $dataValidasi = $request->validate($validasi, [
+            'nama.required'     => 'nama kategori harus di isi',
+            'slug.unique'       => 'slug sudah ada',
+            'deskripsi.max'     => 'maksimal 255 karakter',
+        ]);
+        Category::where('id', $id)->update($dataValidasi);
+        return redirect('/dashboard/kategori')->with('info', 'Kategori berhasil di update');
     }
 
     /**
@@ -74,7 +94,8 @@ class CateagoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Category::where('id', $id)->delete();
+        return back()->with('info', 'Kategori berhasil di hapus');
     }
 
     public function getSlug(Request $request)
