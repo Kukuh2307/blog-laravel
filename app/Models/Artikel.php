@@ -2,15 +2,28 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Artikel extends Model
 {
     use HasFactory;
+    use Sluggable;
     protected $guarded = ['id'];
+
+    public function sluggable(): array
+    {
+        return [
+            // slug di generate dari id,for nama pada view artikel baru
+            'slug' => [
+                'source' => 'judul'
+            ]
+        ];
+    }
 
     // relasi artikel ke tabel user (one to one), 1 artikel hanya dibuat oleh 1 user dan 1 user bisa membuat banyak artikel (one to many)
     public function user()

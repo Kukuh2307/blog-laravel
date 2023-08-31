@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CateagoryController;
@@ -48,3 +49,9 @@ Route::resource('/dashboard/kategori', CateagoryController::class)->middleware('
 
 // route slug
 Route::get('/slug-kategori', [CateagoryController::class, 'getSlug'])->middleware('auth');
+
+// route slug artikel
+Route::get('/slug-artikel', [ArticleController::class, 'getSlug'])->middleware('auth');
+
+// route artikel
+Route::resource('/dashboard/artikel', ArticleController::class)->middleware('auth');
