@@ -99,7 +99,13 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $article = Articles::where('id', $id)->first();
+        return view('dashboard.artikel.artikel-edit')->with([
+            'tittle'        => 'Edit Artikel',
+            'article'       => $article,
+            'categories'    => Category::all(),
+            'tags'          => $article->tags()->implode('name', ','),
+        ]);
     }
 
     /**
@@ -107,7 +113,71 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // ambil artikel dari model dengan where
+        $article = Articles::where('id', $id)->first();
+
+        // cek validasi apakah sesuai
+        $validasi = [
+            'judul'         => 'required|max:255',
+            'gambar'        => 'image|file|max:1024',
+            'category_id'   => 'required',
+            'tag'           => 'required',
+            'isi'           => 'required',
+        ];
+
+        // jika slug dari input tidak sama dengan slug yng ada di tabel artikel maka lakuka validasi
+        if ($request->slug != $article->slug) {
+            $validasi['slug'] = 'required|unique:articles';
+        }
+        $dataValidasi = $request->validate($validasi, [
+            'judul.required'        => 'Judul artikel tidak boleh kosong',
+            'judul.max'             => 'Maksimal 255 karakter',
+            'slug.required'         => 'Slug tidak boleh kosong',
+            'slug.unique'           => 'Slug sudah di pakai',
+            'gambar.image'          => 'File yang anda upload bukan gambar',
+
+            'gambar.max'            => 'Maksimal ukuran gambar 1 MB',
+            'category_id.required'  => 'Kategori artikel harus dipilih',
+            'tag.required'          => 'Tag artikel harus di isi',
+            'isi.required'          => 'Isi artikel harus di isi',
+        ]);
+
+        // apabila admin mengupload gambar
+        if ($request->file('gambar')) {
+            // apabila artikel memiliki gambar lama maka file gambar pada folder akan di hapus 
+            if ($request->gambarLama) {
+                File::delete(public_path('images/' . $request->gambarLama));
+            }
+            // setelah itu inputan gambar akan di hash dan di masukkan ke dalam folder path
+            $nama_gambar = $request->file('gambar')->hashName();
+            $request->file('gambar')->move(public_path('images'), $nama_gambar);
+
+            // cek validasi gambar
+            $dataValidasi['gambar'] = $nama_gambar;
+        }
+
+        // cek validasi user id
+        $dataValidasi['user_id'] = auth()->user()->id;
+
+        // cek validasi kutipan berdasarkan inputan isi yang di limit hanya 150 karakter
+        $dataValidasi['kutipan'] = Str::limit(strip_tags($request->isi), 150);
+
+        // proses update
+        $article->update($dataValidasi);
+
+        // pada bagian tag akan di pisah dan di buatkan variabel array kosong
+        $tags = explode(',', $request->tag);
+        $newTags = [];
+
+        // dan akan dilakukan looping untuk memasukkan data
+        foreach ($tags as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
+            array_push($newTags, $tag->id);
+        }
+        $article->tags()->sync($newTags);
+
+        // redirect dengan pesan
+        return redirect('/dashboard/artikel')->with('info', 'artikel berhasil di update');
     }
 
     /**

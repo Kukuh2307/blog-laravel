@@ -52,7 +52,7 @@
                         @error('deskripsi')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <textarea name="deskripsi" id="deskripsi" class="form-control">{{ old('deskripsi',$data->deskripsi) }}</textarea>
+                        <textarea name="deskripsi" id="editor" class="form-control">{{ old('deskripsi',$data->deskripsi) }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> Update</button>
                 </form>
