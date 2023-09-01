@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Artikel;
+use App\Models\Articles;
 use Illuminate\Database\Eloquent\Model;
 
 // import slugable
@@ -29,6 +29,6 @@ class Category extends Model
     // relasi tabel kategori dengan tabel artikel yang dimana 1 kategori bisa memiliki banyak artikel (one to many)
     public function articles()
     {
-        return $this->hasMany(Artikel::class);
+        return $this->hasMany(Articles::class);
     }
 }

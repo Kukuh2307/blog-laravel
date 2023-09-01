@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Artikel extends Model
+class Articles extends Model
 {
     use HasFactory;
     use Sluggable;
