@@ -80,7 +80,7 @@
                     {{-- Tag --}}
                     <div class="mb-3">
                         <label for="tag" class="form-label">Tag (Pisahkan dengan koma)</label>
-                        <input type="text" class="form-control @error('tag') is-invalid @enderror" id="tag" name="tag" value="{{ old('tag') }}">
+                        <input type="text" class="form-control @error('tag') is-invalid @enderror" id="tokenfield" name="tag" value="{{ old('tag') }}">
                         @error('tag')
                             <div class="invalid-feedback">
                                 {{ $message }}
