@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article_tag', function (Blueprint $table) {
-            $table->foreignId('article_id')->constant();
+        Schema::create('articles_tag', function (Blueprint $table) {
+            $table->foreignId('articles_id')->constant();
             $table->foreignId('tag_id')->constant();
             $table->timestamps();
         });
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_tag');
+        Schema::dropIfExists('articles_tag');
     }
 };

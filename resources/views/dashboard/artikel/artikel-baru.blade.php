@@ -19,8 +19,9 @@
                         {{ 'input Artikel gagal' }}
                     </div>
                 @endif
-                <form action="/dashboard/artikel" method="POST">
+                <form action="/dashboard/artikel" method="POST" enctype="multipart/form-data">
                     @csrf
+                    {{-- judul --}}
                     <div class="mb-3">
                         <label for="judul" class="form-label">Nama Artikel</label>
                         <input type="text" class="form-control @error('judul') is-invalid @enderror" id="artikel" name="judul" value="{{ old('judul') }}" onkeyup="getSlug()">
@@ -42,13 +43,58 @@
                         @enderror
                     </div>
 
-                    {{-- deskripsi --}}
+                    {{-- kategori --}}
                     <div class="mb-3">
-                        <label for="deskripsi" class="form-label">Deskripsi</label>
-                        @error('deskripsi')
+                        <label for="category" class="form-label">Kategori</label>
+                        <select name="category_id" id="" class="form-select @error('category_id') is-invalid @enderror">
+                            <option value="">-- Pilih Kategori --</option>
+                            @foreach ($categories as $category)
+                                @if (old('kategori_id') == $category->id)
+                                    <option value="{{ $category->id }}"selected>{{ $category->nama }}</option>
+                                @else
+                                    <option value="{{ $category->id }}">{{ $category->nama }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    {{-- gambar --}}
+                    {{-- fungsi tampil gambar berada di bagian main --}}
+                    <div class="mb-3">
+                        <label for="gambar" class="form-label">Gambar</label>
+                        <img src="" alt="" width="500px" class="img-fluid tampil-gambar mb-3">
+                        <input type="file" class="form-control @error('judul') is-invalid @enderror" name="gambar" id="gambar" onchange="tampilGambar()">
+    
+                        @error('gambar')    
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    {{-- Tag --}}
+                    <div class="mb-3">
+                        <label for="tag" class="form-label">Tag (Pisahkan dengan koma)</label>
+                        <input type="text" class="form-control @error('tag') is-invalid @enderror" id="tag" name="tag" value="{{ old('tag') }}">
+                        @error('tag')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    {{-- isi --}}
+                    <div class="mb-3">
+                        <label for="isi" class="form-label">Isi</label>
+                        @error('isi')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <textarea name="deskripsi" id="deskripsi" class="form-control">{{ old('deskripsi') }}</textarea>
+                        <textarea name="isi" class="form-control" id="editor">{{ old('isi') }}</textarea>
                     </div>
                     <button type="reset" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i> Reset</button>
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> Simpan</button>

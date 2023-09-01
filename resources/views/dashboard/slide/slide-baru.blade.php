@@ -30,6 +30,7 @@
                 </div>
 
                 {{-- gambar --}}
+                {{-- fungsi tampil gambar berada di bagian main --}}
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
                     <img src="" alt="" width="500px" class="img-fluid tampil-gambar mb-3">

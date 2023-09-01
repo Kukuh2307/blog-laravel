@@ -51,6 +51,7 @@
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
         <script>
+            // fungsi untuk menampilkan gambar saat admin menginputkan gambar baru
             function tampilGambar() {
                 let gambarInput = document.getElementById('gambar');
                 let tampilGambar = document.querySelector('.tampil-gambar');
