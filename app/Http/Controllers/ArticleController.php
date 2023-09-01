@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\File;
 
 class ArticleController extends Controller
 {
@@ -17,7 +18,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.artikel.index')->with([
+            'tittle'        => 'Artikel',
+            'articles'      => Articles::orderBy('created_at', 'desc')->get(),
+        ]);
     }
 
     /**
@@ -111,7 +115,16 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $article = Articles::where('id', $id)->first();
+        // apabila gambar tersimpan di folder maka akan di hapus
+        if ($article->gambar) {
+            File::delete(public_path('images') . '/' . $article->gambar);
+        }
+        // hapus tag dengan relasi tabel terkait
+        $article->tags()->detach();
+
+        Articles::where('id', $id)->delete();
+        return back()->with('info', 'Artikel berhasil di hapus');
     }
 
     public function getSlug(Request $request)
