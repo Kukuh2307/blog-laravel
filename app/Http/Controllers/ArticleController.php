@@ -83,7 +83,7 @@ class ArticleController extends Controller
             $artikel->tags()->attach($tag);
         };
 
-        return back()->with('info', 'Artikel baru berhasi di simpan');
+        return redirect('/dashboard/artikel')->with('info', 'Artikel baru berhasi di simpan');
     }
 
     /**
