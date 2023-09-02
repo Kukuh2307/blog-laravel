@@ -50,11 +50,7 @@
                         <select name="category_id" id="" class="form-select @error('category_id') is-invalid @enderror">
                             <option value="">-- Pilih Kategori --</option>
                             @foreach ($categories as $category)
-                                @if (old('kategori_id',$article->id) == $category->id)
-                                    <option value="{{ $category->id }}"selected>{{ $category->nama }}</option>
-                                @else
-                                    <option value="{{ $category->id }}">{{ $category->nama }}</option>
-                                @endif
+                                <option value="{{ $category->id }}"{{ $article->category_id == $category->id ? 'selected' : '' }} >{{ $category->nama }}</option>
                             @endforeach
                         </select>
                         @error('category_id')
