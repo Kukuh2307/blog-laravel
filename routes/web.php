@@ -24,6 +24,10 @@ Route::get('/', [BlogController::class, 'index']);
 // route ke artiel
 Route::get('/artikel', [BlogController::class, 'article']);
 
+// route ke detail artikel
+Route::get('/artikel/{slug}', [BlogController::class, 'detail']);
+// Route::get('/artikel/{Articles:slug}', [BlogController::class, 'detail']);
+
 // route ke halaman login
 Route::get('/login', [authController::class, 'index']);
 
