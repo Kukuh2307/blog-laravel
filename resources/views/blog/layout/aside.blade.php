@@ -21,9 +21,13 @@
                     @foreach ($categories as $categori)    
                     <ul class="list-unstyled mb-0">
                         <li class="mb-1">
-                            <a href="" class="text-decoration-none text-dark link-primary d-grid d-flex justify-content-between"><span>
+                            <a href="/artikel?kategori={{ $categori->slug }}" class="text-decoration-none text-dark link-primary d-grid d-flex justify-content-between"><span>
                                 {{ $categori->nama }}
-                            </span><span>0</span></a>
+                            </span><span>
+                                @if ($categori->articles->count() !== null)
+                                    {{ $categori->articles->count() }}
+                                @endif   
+                            </span></a>
                         </li>
                     </ul>
                     @endforeach

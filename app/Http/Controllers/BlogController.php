@@ -30,6 +30,24 @@ class BlogController extends Controller
             $filter = request('cari');
             $filter_name = 'hasil pencarian';
         }
+        // filter dari aside berdasarkan kataegori
+        if(request('kategori')){
+            // mengambil slug di category
+            $category = Category::firstWhere('slug',request('kategori'));
+            // lalu di cocokkan dengan category id yang ada di tabel artikel
+            $articles->where('category_id', $category->id);
+            $filter = $category->nama;
+            $filter_name = 'Kategori';
+        }
+        // filter dari tag berdasarkan slug
+        if(request('tag')){
+            // whereHas mengambil 2 argumen, 1 adalah relasi dan query
+            $articles->whereHas('tags',function($query){
+                $query->where('slug',request('tag'));
+            });
+            $filter = request('tag');
+            $filter_name = 'Tag';
+        }
         return view('blog.artikel')->with([
             'tittle'                   => 'Artikel',
             'categories'               => Category::all(),
@@ -37,6 +55,7 @@ class BlogController extends Controller
             'categoriesTittle'         => 'Kategori',
             'cari'                     => $filter,
             'hasil'                    => $filter_name,
+            'test'                     => 'testing',
         ]);
     }
 }
