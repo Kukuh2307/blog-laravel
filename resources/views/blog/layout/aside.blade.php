@@ -36,8 +36,22 @@
         </div>
     </div>
     <!-- Side widget-->
-    <div class="card mb-4">
-        <div class="card-header">Side Widget</div>
-        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+    <div class="card mb-4 border-0">
+        <div class="card-header bg-transparent fw-bold fs-5" style="border-bottom: 2px solid black">{{ $label }}</div>
+        <div class="card-body">
+            @foreach ($views as $view)
+            <div class="row mb-3">
+                <div class="col-4">
+                    <a href="/artikel/{{ $view->slug }}">
+                        <img src="{{ asset('images/'.$view->gambar) }}" class="img-fluid rounded-0" alt="{{ $view->slug }}">
+                    </a>
+                </div>
+                <div class="col-8">
+                    <a href="/artikel/{{ $view->slug }}" class="text-dark text-decoration-none h6 d-block">{{ $view->judul }}</a>
+                    <small class="text-muted">{{ $view->created_at->format('d F Y') }}</small>
+                </div>
+            </div>
+            @endforeach
+        </div>
     </div>
 </div>

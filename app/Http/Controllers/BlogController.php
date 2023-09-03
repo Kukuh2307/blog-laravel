@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articles;
+use App\Models\Tag;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\slide;
@@ -17,6 +19,8 @@ class BlogController extends Controller
             'jumlah-slides'            => Slide::count(),
             'categories'               => Category::all(),
             'articles'                 => Articles::orderBy('created_at','desc')->paginate(5)->withQueryString(),
+            'views'                    => Articles::orderBy('view','desc')->take(5)->get(),
+            'label'                    => 'Artikel Populer',
             'categoriesTittle'         => 'Kategori',
         ]);
     }
@@ -41,21 +45,46 @@ class BlogController extends Controller
         }
         // filter dari tag berdasarkan slug
         if(request('tag')){
+            $tag = Tag::firstWhere('slug', request('tag'));
             // whereHas mengambil 2 argumen, 1 adalah relasi dan query
             $articles->whereHas('tags',function($query){
                 $query->where('slug',request('tag'));
             });
-            $filter = request('tag');
+            $filter = $tag->name;
             $filter_name = 'Tag';
         }
         return view('blog.artikel')->with([
             'tittle'                   => 'Artikel',
             'categories'               => Category::all(),
             'articles'                 => $articles->paginate(5)->withQueryString(),
+            'views'                    => Articles::orderBy('view','desc')->take(5)->get(),
+            'label'                    => 'Artikel Populer',
             'categoriesTittle'         => 'Kategori',
             'cari'                     => $filter,
             'hasil'                    => $filter_name,
-            'test'                     => 'testing',
         ]);
     }
+
+    public function detail($slug){
+        $articles = Articles::where('slug',$slug)->first();
+        // menambah jumlah view ketika detail artikel di buka
+        $articles->increment('view');
+        return view('blog.detail')->with([
+            'tittle'                   => 'Artikel Detail',
+            'categories'               => Category::all(),
+            'article'                  => $articles,
+            'categoriesTittle'         => 'Kategori',
+            'views'                    => Articles::latest()->take(5)->get(),
+            'label'                    => 'Artikel Terbaru'
+        ]);
+    }
+    // public function detail(Articles $slug){
+    //     dd($slug);
+    //     return view('blog.detail')->with([
+    //         'tittle'                   => 'Artikel Detail',
+    //         'categories'               => Category::all(),
+    //         'article'                  => $slug,
+    //         'categoriesTittle'         => 'Kategori',
+    //     ]);
+    // }
 }
