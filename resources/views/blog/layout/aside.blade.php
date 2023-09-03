@@ -1,13 +1,15 @@
 <!-- Side widgets-->
 <div class="col-lg-4">
     <!-- Search widget-->
-    <div class="card mb-4">
-        <div class="card-header">Search</div>
+    <div class="card mb-4 border-0">
+        <div class="card-header bg-transparent fw-bold fs-5" style="border-bottom: 2px solid black">Pencarian</div>
         <div class="card-body">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-            </div>
+            <form action="/artikel">
+                <div class="input-group">
+                    <input type="text" name="cari" class="form-control border-0 border-bottom rounded-0" placeholder="Masukkan kata kunci pencarian">
+                    <button type="submit" class="btn btn-light border-bottom"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </form>
         </div>
     </div>
     <!-- Categories widget-->
@@ -19,9 +21,13 @@
                     @foreach ($categories as $categori)    
                     <ul class="list-unstyled mb-0">
                         <li class="mb-1">
-                            <a href="" class="text-decoration-none text-dark link-primary d-grid d-flex justify-content-between"><span>
+                            <a href="/artikel?kategori={{ $categori->slug }}" class="text-decoration-none text-dark link-primary d-grid d-flex justify-content-between"><span>
                                 {{ $categori->nama }}
-                            </span><span>0</span></a>
+                            </span><span>
+                                @if ($categori->articles->count() !== null)
+                                    {{ $categori->articles->count() }}
+                                @endif   
+                            </span></a>
                         </li>
                     </ul>
                     @endforeach

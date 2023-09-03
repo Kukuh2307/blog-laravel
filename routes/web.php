@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 // route ke halaman index
 Route::get('/', [BlogController::class, 'index']);
 
+// route ke artiel
+Route::get('/artikel', [BlogController::class, 'article']);
+
 // route ke halaman login
 Route::get('/login', [authController::class, 'index']);
 
