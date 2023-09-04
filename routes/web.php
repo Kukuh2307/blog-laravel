@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\BlogController;
@@ -44,9 +45,7 @@ Route::redirect('home', 'dashboard');
 Route::post('/logout', [authController::class, 'logout']);
 
 // route halaman dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard.index')->with(['tittle' => 'About']);
-})->middleware('auth');
+Route::get('/dashboard',[AboutController::class,'index'])->middleware('auth');
 
 // route halaman slide
 Route::resource('/dashboard/slide', slideController::class)->middleware('auth');

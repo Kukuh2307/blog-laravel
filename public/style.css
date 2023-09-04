@@ -7,3 +7,16 @@
         height: 300px;
     }
 }
+
+.tokenfield .token{
+    margin:-1px 3px 1px 1px;
+    height: 25px;
+    color: white;
+    line-height: 22px;
+    border:none;
+    background-color: dimgray;
+}
+.tokenfield .token a{
+    text-decoration: none;
+    color: white;
+}
