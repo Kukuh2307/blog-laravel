@@ -21,6 +21,7 @@ class ArticleController extends Controller
         return view('dashboard.artikel.index')->with([
             'tittle'        => 'Artikel',
             'articles'      => Articles::orderBy('created_at', 'desc')->get(),
+            'source'        => '',
         ]);
     }
 
@@ -32,6 +33,7 @@ class ArticleController extends Controller
         return view('dashboard.artikel.artikel-baru')->with([
             'tittle'        => 'Artikel',
             'categories'    => Category::all(),
+            'source'        => '',
         ]);
     }
 
@@ -105,6 +107,7 @@ class ArticleController extends Controller
             'article'       => $article,
             'categories'    => Category::all(),
             'tags'          => $article->tags()->implode('name', ','),
+            'source'        => '',
         ]);
     }
 

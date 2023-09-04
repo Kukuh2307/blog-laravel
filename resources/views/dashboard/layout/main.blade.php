@@ -11,6 +11,9 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('admin') }}/css/styles.css" rel="stylesheet" />
 
+        {{-- style css --}}
+        <link rel="stylesheet" href="{{ asset('style.css') }}">
+
         {{-- css datatable --}}
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
@@ -50,7 +53,7 @@
         <script src="{{ asset('admin') }}/js/scripts.js"></script>
 
         {{-- tokenfield js --}}
-        <script type="text/javascript" src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
 
         {{-- cdn jquery untuk generate slug--}}
@@ -91,16 +94,18 @@
             new DataTable('#myTable');
         </script>
 
+@if ($tittle == 'About' || $tittle == 'Artikel')
         <script>
             // token file tambah tag artikel baru
             $('#tokenfield').tokenfield({
                 autocomplete: {
-                source: [],
+                source: [{!! $source !!}],
                 delay: 100,
                 prefilled: []
             },
             showAutocompleteOnFocus: true
             })
         </script>
+@endif
     </body>
 </html>

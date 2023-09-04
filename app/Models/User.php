@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'foto',
+        'alamat',
+        'telephone',
+        'keahlian'
     ];
 
     // relasi user dengan artikel,yang dimana 1 user bisa membuat banyak artikel (one to many)
