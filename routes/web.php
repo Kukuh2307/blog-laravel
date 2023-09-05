@@ -24,6 +24,7 @@ Route::get('/', [BlogController::class, 'index']);
 
 // route ke artiel
 Route::get('/artikel', [BlogController::class, 'article']);
+Route::get('/tentang', [BlogController::class, 'about']);
 
 // route ke detail artikel
 Route::get('/artikel/{slug}', [BlogController::class, 'detail']);
@@ -46,6 +47,9 @@ Route::post('/logout', [authController::class, 'logout']);
 
 // route halaman dashboard
 Route::get('/dashboard',[AboutController::class,'index'])->middleware('auth');
+
+// route update halaman dashboard
+Route::put('/dashboard',[AboutController::class,'update'])->middleware('auth');
 
 // route halaman slide
 Route::resource('/dashboard/slide', slideController::class)->middleware('auth');

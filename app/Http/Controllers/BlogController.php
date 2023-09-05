@@ -78,6 +78,16 @@ class BlogController extends Controller
             'label'                    => 'Artikel Terbaru'
         ]);
     }
+    public function about(){
+        return view('blog.tentang')->with([
+            'tittle'        => 'Tentang',
+            'categories'    => Category::all(),
+            'user'          => User::where('id',1)->get(),
+            'views'         => Articles::orderBy('view','desc')->take(5)->get(),
+            'categoriesTittle' => 'Tentang',
+            'label'         => 'Artikel Populer',
+        ]);
+    }
     // public function detail(Articles $slug){
     //     dd($slug);
     //     return view('blog.detail')->with([

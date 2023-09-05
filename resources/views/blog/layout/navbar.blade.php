@@ -7,7 +7,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link {{ $tittle == 'Beranda' ? 'active' : '' }}" href="/">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link {{ $tittle == 'Artikel' || $tittle == 'Artikel Detail' ? 'active' : '' }}" href="/artikel">Artikel</a></li>
-                <li class="nav-item"><a class="nav-link {{ $tittle == 'Tentang' ? 'active' : '' }}" href="#!">Tentang</a></li>
+                <li class="nav-item"><a class="nav-link {{ $tittle == 'Tentang' ? 'active' : '' }}" href="/tentang">Tentang</a></li>
                 @auth
                 <li class="nav-item dropdown">
                     {{-- format penulisan nama hanya index 0 dengan bantuan explode --}}
